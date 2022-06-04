@@ -10,7 +10,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 
-app.get('/api/:filter', async (req, res) => {
+app.get('/:filter', async (req, res) => {
     youtube.search(req.params.filter, { type: 'channel' }).then((results) => {
         let r = results.channels.filter(vid => vid.subscribers.length === 7 && !isNaN(vid.subscribers[2]) && !isNaN(vid.subscribers[1]) && !isNaN(vid.subscribers[0]));
             res.render(path.join(__dirname, '/public', 'file.html'), {r});
