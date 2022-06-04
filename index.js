@@ -1,12 +1,23 @@
-const platforms = require('./routes/flatforms');
 
 const express = require('express');
+const youtube = require("scrape-youtube");
+const utf8 = require("utf8");
 const app = express();
+const path = require('path');
 
 
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
-app.use(express.json());
-app.use('/api/platforms', platforms);
+
+app.get('/:filter', async (req, res) => {
+    youtube.search(req.params.filter, { type: 'channel' }).then((results) => {
+        let r = results.channels.filter(vid => vid.subscribers.length === 7 && !isNaN(vid.subscribers[2]) && !isNaN(vid.subscribers[1]) && !isNaN(vid.subscribers[0]));
+            res.render(path.join(__dirname, '/public', 'file.html'), {r});
+    });
+});
+
+
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
