@@ -13,7 +13,7 @@ app.set('view engine', 'html');
 app.get('/:filter', async (req, res) => {
     youtube.search(req.params.filter, { type: 'channel' }).then((results) => {
         let r = results.channels.filter(vid => vid.subscribers.length === 7 && !isNaN(vid.subscribers[2]) && !isNaN(vid.subscribers[1]) && !isNaN(vid.subscribers[0]));
-            res.write(r.name);
+            res.write(r.name+ 'dfgtgtd"');
     });
 });
 
